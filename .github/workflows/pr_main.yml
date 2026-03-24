@@ -11,19 +11,19 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event.sender.login != 'dependabot[bot]' }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           ref: ${{ github.event.pull_request.base.sha }}
 
       - run: node -p "'version=' + require('./package.json').version" >> $GITHUB_OUTPUT
         id: base-version
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - run: node -p "'version=' + require('./package.json').version" >> $GITHUB_OUTPUT
         id: new-version
 
-      - uses: madhead/semver-utils@latest
+      - uses: rsamdev/semver-utils@latest
         id: comparison
         with:
           version: ${{ steps.new-version.outputs.version }}
